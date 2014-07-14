@@ -1,3 +1,6 @@
+#ifndef BS_BOARD_H
+#define BS_BOARD_H
+
 #include <iostream>
 #include "BS_BoardTile.h"
 #include "Ship.h"
@@ -38,3 +41,5 @@ private:
 	std::vector<BS_BoardTile> board;
 	std::vector<BS_BoardTile> attempts;
 };
+
+#endif //BS_BOARD_H
