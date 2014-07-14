@@ -26,6 +26,9 @@ char const shipHit = '@';
 char const boardNoHit = ' ';
 char const boardHit = 'X';
 
+string const legend =	"---Legend---   \nO Ship         \n@ Ship with hit\nX Missed Attack\n";
+		
+
 void displayTile(BS_BoardTile& tile, ostream& out)
 {
 	int sel = ((int)tile.getHit() << 1) | (int)tile.getShip(); // 0 - 3
@@ -79,6 +82,7 @@ void BS_Board::displayBoard(bool full)
 				displayTile(*b_it, out);
 			}		
 		}
+		out << legend;
 	} else {
 		for (b_it = board.begin(); b_it != board.end(); ++b_it) {
 
@@ -92,6 +96,7 @@ void BS_Board::displayBoard(bool full)
 				displayTile(*b_it, out);
 			}		
 		}
+		out << legend;
 	}
 }
 
@@ -266,7 +271,7 @@ bool BS_Board::checkShot(char c, char r)
 
 	for (s_it = ships.begin(); s_it != ships.end(); ++s_it) {
 		if ((*s_it).checkHit(c, r)) {
-			out << (*s_it).type() << " was hit!" << endl;
+			out << "\n" << (*s_it).type() << " was hit!" << endl;
 			int i = ((r - 1) * boardSize) + c - 'A';
 			board[i].setHit();
 			return true;

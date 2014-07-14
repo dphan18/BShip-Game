@@ -11,4 +11,5 @@ int main()
 	while(!bs.gameOver()) {
 		bs.gameUpdate();
 	}
+	return 0;
 }
