@@ -4,7 +4,8 @@ GAME_SRC :=	main.cpp		\
 		BS_ComputerPlayer.cpp	\
 		BS_HumanPlayer.cpp	\
 		BS_Board.cpp		\
-		BattleShip.cpp
+		BattleShip.cpp		\
+		BS_Strategy.cpp
 
 all: battleShipGame
 
@@ -25,6 +26,9 @@ BS_ComputerPlayer:
 
 BS_Board:
 	g++ -std=c++11 -c BS_Board.cpp
+
+BS_Strategy:
+	g++ -std=c++11 -c BS_Strategy.cpp
 
 clean:
 	-rm *.o battleShipGame

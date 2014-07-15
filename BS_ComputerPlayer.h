@@ -5,16 +5,8 @@
 #include <iostream>
 #include <list>
 #include "BS_Player.h"
-
-typedef struct coord_ {
-	char col;
-	char row;
-	
-	coord_(char c, char r) {
-		col = c;
-		row = r;
-	}
-} coord;
+#include "coord.h"
+#include "BS_Strategy.h"
 
 class BS_ComputerPlayer : public BS_Player {
 
@@ -26,8 +18,14 @@ public:
 
 	void move(char *c, char *r);
 
+	void markHit(char c, char r) {
+		board.markHit(c, r);
+		strategy.update(c, r);
+	}
+
 private:
-	std::list<coord> coords;
+	std::list<coord_t> coords;
+	BS_Strategy strategy;
 };
 
 #endif // BS_COMPUTERPLAYER_H

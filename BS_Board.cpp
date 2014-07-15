@@ -284,6 +284,14 @@ void BS_Board::markHit(char c, char r)
 {
 	int i = ((r - 1) * boardSize) + c - 'A';
 	attempts[i].setShip(); // Marks a ship in this tile
+
+	/* For computer player
+	if (strategy.valid()) {
+		strategy.update(c, r);
+	} else {
+		stratey.set(c, r);
+	}
+	*/
 }
 
 bool BS_Board::fleetSunk()

@@ -34,7 +34,7 @@ public:
 		return board.checkShot(c, r);
 	}
 	
-	void markHit(char c, char r) {
+	virtual void markHit(char c, char r) {
 		board.markHit(c, r);
 	}
 
