@@ -5,12 +5,16 @@
 
 class Game {
 public:
+	// Constructor
 	Game() : finished(false) { }
-	virtual void gameUpdate() = 0;
+
 	bool gameOver() {
 		return finished;
 	}
+
+	virtual void gameUpdate() = 0;
 	
+	// Destructor
 	virtual ~Game() { }
 
 protected:

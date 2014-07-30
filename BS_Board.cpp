@@ -189,7 +189,7 @@ void BS_Board::markBoard(Ship& ship)
 	}
 }
 
-void BS_Board::shipPlacementPrompt(const shipInfo& info)
+void BS_Board::shipPlacementPrompt(const Ship::shipInfo& info)
 {
 	char c1, r1, c2, r2;	
 	
@@ -228,7 +228,7 @@ void BS_Board::shipPlacementPrompt(const shipInfo& info)
 
 void BS_Board::placeShips()
 {
-	vector<shipInfo>::const_iterator s_it;
+	vector<Ship::shipInfo>::const_iterator s_it;
 
 	if (showBoard) {
 		displayBoard(false);

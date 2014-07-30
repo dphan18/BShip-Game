@@ -3,12 +3,13 @@
 
 #include "coord.h"
 
+class BS_Strategy {
+public:
 typedef enum {NOCHANCE, NOTLIKELY, MAYBE, LIKELY} chance_t;
 
 typedef enum {NONE, UP, DOWN, LEFT, RIGHT} dir_t;
 
-class BS_Strategy {
-public:
+	// Constructor
 	BS_Strategy() : up(MAYBE), 
 			down(MAYBE), 
 			left(MAYBE), 

@@ -3,10 +3,9 @@
 
 class BS_Tile {
 public:
+	// Constructor
 	BS_Tile() : col(0), row(0) { }
 	BS_Tile(char c, char r) : col(c), row(r) { }
-
-	~BS_Tile() { }
 
 	char getCol() {
 		return col;
