@@ -12,13 +12,15 @@ BS_ComputerPlayer::BS_ComputerPlayer(std::string name,
 					std::istream& i,
 					std::ostream& o) : BS_Player(name, number, i, o, false)
 {
+	// Initialize a list of the board coordinates
 	for (int r = 1; r < 1 + BS_Board::boardSize; ++r) {
 		for (int c = 'A'; c < 'A' + BS_Board::boardSize; ++c) {
 			coords.push_back(coord_t(c, r));
 		}
 	}
 
-	srand(time(0)); // Seed rand
+	// Seed rand
+	srand(time(0));
 }
 
 void BS_ComputerPlayer::move(char *c, char *r)

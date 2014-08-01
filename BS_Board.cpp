@@ -1,6 +1,9 @@
 #include <string>
 #include <cctype>
 #include <cstdlib>
+#include <ctime>
+#include <list>
+#include "coord.h"
 #include "BS_Board.h"
 #include "BS_ShipTile.h"
 
@@ -226,6 +229,83 @@ void BS_Board::shipPlacementPrompt(const Ship::shipInfo& info)
 	displayBoard(false);
 }
 
+void BS_Board::shipPlacementRandom(const Ship::shipInfo& info)
+{
+	static std::list<coord_t> coords;
+	static bool initialized = false;
+	std::list<coord_t>::iterator c_it;
+
+	if (!initialized) {
+        	// Initialize a list of the board coordinates
+        	for (int r = 1; r < 1 + BS_Board::boardSize; ++r) {
+                	for (int c = 'A'; c < 'A' + BS_Board::boardSize; ++c) {
+                        	coords.push_back(coord_t(c, r));
+                	}
+        	}
+		initialized = true;
+
+        	// Seed rand
+        	srand(time(0));
+	}
+	
+	bool success = false;
+	while (!success) {
+		// Select random coordinate
+		int count = (rand() % coords.size());
+		c_it = coords.begin();
+		while (count--) {
+			c_it++;
+		}
+		char c1 = (*c_it).col;
+		char r1 = (*c_it).row;
+
+		char dirSeed = rand() % 4;
+		int i = 0;	
+		do {
+			char c2, r2;
+			char direction = (dirSeed + i) % 4;
+			switch (direction) {
+			case 0:
+				c2 = c1;
+				r2 = (r1 - info.size) + 1;
+				break;
+			case 1:
+				c2 = c1;
+				r2 = (r1 + info.size) - 1;
+				break;
+			case 2:
+				c2 = (c1 - info.size) + 1;
+				r2 = r1;
+				break;
+			case 3:
+				c2 = (c1 + info.size) - 1;
+				r2 = r1;
+				break;
+			default:
+				while(1);
+			}
+
+			if (offBoard(c1, r1, c2, r2)) {
+				continue;
+			}
+			
+			if (!Ship::checkSize(info.size, c1, r1, c2, r2)) {
+				continue;
+			}
+
+			Ship s(info, c1, r1, c2, r2);
+			if (shipCollision(s)) {
+				continue;
+			} else {
+				ships.push_back(s);
+				markBoard(s);
+				coords.erase(c_it); // Delete coordinate
+				success = true;
+			}
+		} while (!success && ++i < 4);
+	}
+}
+
 void BS_Board::placeShips()
 {
 	vector<Ship::shipInfo>::const_iterator s_it;
@@ -240,16 +320,8 @@ void BS_Board::placeShips()
 		if (showBoard) {
 			shipPlacementPrompt(*s_it);
 		} else {
-			// Random Placement
+			shipPlacementRandom(*s_it);
 		}
-	}
-
-	if (!showBoard) { // Temporarily placing computer ships in fixed locations
-		ships.push_back(Ship(shipTypes[AIRCRAFT], 'A', 1, 'E', 1));
-		ships.push_back(Ship(shipTypes[BATTLE], 'A', 2, 'D', 2));
-		ships.push_back(Ship(shipTypes[DESTROYER], 'A', 3, 'C', 3));
-		ships.push_back(Ship(shipTypes[SUB], 'A', 4, 'C', 4));
-		ships.push_back(Ship(shipTypes[PATROL], 'A', 5, 'B', 5));
 	}
 }
 

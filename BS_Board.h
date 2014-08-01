@@ -9,7 +9,7 @@ class BS_Board {
 public:
 	static int const boardSize = 10;
 
-	std::vector<Ship::shipInfo> const shipTypes = {	{ "Aircraft Carrier", 5},
+	std::vector<Ship::shipInfo> const  shipTypes = {{ "Aircraft Carrier", 5},
 							{ "Battle Ship", 4},
 							{ "Destroyer", 3},
 							{ "Submarine", 3},
@@ -29,6 +29,7 @@ public:
 private:
 	bool shipCollision(Ship&);
 	void shipPlacementPrompt(const Ship::shipInfo&);
+	void shipPlacementRandom(const Ship::shipInfo&);
 	void markBoard(Ship&);
 	bool showBoard;
 	std::istream& in;

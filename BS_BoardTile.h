@@ -5,6 +5,7 @@
 
 class BS_BoardTile : public BS_Tile {
 public:
+	// Constructors
 	BS_BoardTile() : hit(false), ship(false) { }
 	BS_BoardTile(char c, char r) : BS_Tile(c, r), hit(false), ship(false) { }
 
