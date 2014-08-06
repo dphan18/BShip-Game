@@ -14,12 +14,14 @@ public:
 
 	void clear();
 	void refresh();
+	void write(const std::string& str);
 	void write(const unsigned char panel, const std::string& str);
 	void write(const unsigned char panel, const unsigned char row, const std::string& str);
 private:
 	const char count, width, height;
 	char lastRow;
 	std::vector< std::vector<std::string> > screen;
+//	std::vector<std::string> stream;
 };
 
 #endif // CONSOLEDISPLAY_H

@@ -21,6 +21,8 @@ void ConsoleDisplay::clear()
 			(*p_it).clear(); // Clear string
 
 	lastRow = 0;
+
+//	stream.clear();
 }
 
 void ConsoleDisplay::refresh()
@@ -42,6 +44,10 @@ void ConsoleDisplay::refresh()
 	// Output each row of the screen
 	for (panelIt_t p_it = screenOut.begin(); p_it != screenOut.end(); ++p_it)
 		cout << *p_it << endl;
+
+	// Output stream after panels
+//	for (panelIt_t st_it = stream.begin(); st_it != stream.end(); ++st_it)
+//		cout << *st_it << endl;
 }
 
 void ConsoleDisplay::write(const unsigned char panel, 
@@ -77,4 +83,9 @@ void ConsoleDisplay::write(const unsigned char panel, const string& str)
 	
 	if (lastRow < row)
 		lastRow = row;
+}
+
+void ConsoleDisplay::write(const string& str)
+{
+	//stream.push_back(str);
 }

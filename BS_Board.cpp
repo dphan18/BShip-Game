@@ -86,7 +86,8 @@ void BS_Board::writeShipGrid(ConsoleDisplay& display)
 			display.write(0, row, displayTile(*b_it));
 		}		
 	}
-	out << legend << endl; // FIXME: Add another buffer to display for these strings
+//	display.write(legend); // FIXME:
+//	display.write("---Legend---   \n");
 }
 
 void BS_Board::writeAttackGrid(ConsoleDisplay& display)

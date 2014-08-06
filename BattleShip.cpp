@@ -8,7 +8,7 @@ using namespace std;
 BattleShip::BattleShip(istream& input, ostream& output) : 	
 				in(input), 
 				out(output), 
-				display(3, 25, 40),
+				display(3, 35, 40),
 				p1Board(in, out),
 				p2Board(in, out),
 				p1(in, out),
