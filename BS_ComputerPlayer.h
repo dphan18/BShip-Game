@@ -2,24 +2,20 @@
 #define BS_COMPUTERPLAYER_H
 
 #include <string>
-#include <iostream>
 #include <list>
 #include "BS_Player.h"
 #include "coord.h"
 #include "BS_Strategy.h"
+#include "ConsoleDisplay.h"
 
 class BS_ComputerPlayer : public BS_Player {
 
 public:
-	BS_ComputerPlayer(std::string name, 
-				char number,
-				std::istream& i,
-				std::ostream& o);
+	BS_ComputerPlayer(std::string name = "Computer");
 
-	void move(char *c, char *r);
+	void move(char *c, char *r, BS_Board& board);
 
-	void markHit(char c, char r) {
-		board.markHit(c, r);
+	void update(char c, char r) {
 		strategy.update(c, r);
 	}
 

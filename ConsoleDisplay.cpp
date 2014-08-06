@@ -1,0 +1,80 @@
+#include "ConsoleDisplay.h"
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+
+ConsoleDisplay::ConsoleDisplay(char c, char w, char h) : count(c), width(w), height(h), lastRow(0)
+{
+	for (int i = 0; i < count; ++i)
+		screen.push_back(vector<string>());
+
+	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it)
+		for (int i = 0; i < h; ++i)
+			(*s_it).push_back(string());
+}
+
+void ConsoleDisplay::clear()
+{
+	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it)
+		for (panelIt_t p_it = (*s_it).begin(); p_it != (*s_it).end(); ++p_it)
+			(*p_it).clear(); // Clear string
+
+	lastRow = 0;
+}
+
+void ConsoleDisplay::refresh()
+{
+	system("clear"); // FIXME: Use curses lib
+	
+	vector<string> screenOut(lastRow + 1);
+
+	// Build up the output
+	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it) {
+		panelIt_t p_it = (*s_it).begin();
+		for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
+			// Append panel string plus padding
+			(*scrOut_it) += ((*p_it) + string(width - (*p_it).length(), ' ') + "  ");
+			++p_it;
+		}
+	}
+
+	// Output each row of the screen
+	for (panelIt_t p_it = screenOut.begin(); p_it != screenOut.end(); ++p_it)
+		cout << *p_it << endl;
+}
+
+void ConsoleDisplay::write(const unsigned char panel, 
+				const unsigned char row, 
+				const string& str)
+{
+	if (panel >= count)
+		return;
+	else if (row >= height)
+		return;
+	else if (width < (screen[panel][row].length() + str.length()))
+		return;
+	else
+		screen[panel][row] += str;
+
+	if (lastRow < row)
+		lastRow = row;
+}
+
+void ConsoleDisplay::write(const unsigned char panel, const string& str)
+{
+	if (count <= panel)
+		return;
+
+	char row = 0;
+	panelIt_t p_it = screen[panel].begin();
+	while ((p_it != screen[panel].end()) && (!(*p_it).empty())) {
+		++p_it;
+		++row;
+	}
+
+	(*p_it) += str;
+	
+	if (lastRow < row)
+		lastRow = row;
+}

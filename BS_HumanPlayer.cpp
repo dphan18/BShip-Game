@@ -5,6 +5,13 @@
 
 using namespace std;
 
+BS_HumanPlayer::BS_HumanPlayer(istream& i, ostream& o) : in(i), out(o)
+{
+	out << "Welcome To Battle Ship!!! What is your name?: ";
+
+	in >> n;
+}
+
 bool BS_HumanPlayer::readUserShotInput(char *col, char *row)
 {
 	char c;
@@ -33,10 +40,8 @@ bool BS_HumanPlayer::readUserShotInput(char *col, char *row)
 	return true;
 }
 
-void BS_HumanPlayer::move(char *c, char *r)
+void BS_HumanPlayer::move(char *c, char *r, BS_Board& board)
 {	
-	board.displayBoard(true);
-
 	bool success = false;	
 	do {
 		out << "Enter your shot (ex. 1A):";
@@ -47,7 +52,7 @@ void BS_HumanPlayer::move(char *c, char *r)
 			continue;
 		}
 
-		success = makeAttempt(*c, *r);
+		success = board.makeAttempt(*c, *r);
 
 	} while (!success);
 }

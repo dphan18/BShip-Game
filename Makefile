@@ -5,7 +5,8 @@ GAME_SRC :=	main.cpp		\
 		BS_HumanPlayer.cpp	\
 		BS_Board.cpp		\
 		BattleShip.cpp		\
-		BS_Strategy.cpp
+		BS_Strategy.cpp		\
+		ConsoleDisplay.cpp
 
 all: battleShipGame
 
@@ -27,8 +28,17 @@ BS_ComputerPlayer:
 BS_Board:
 	g++ -std=c++11 -c BS_Board.cpp
 
+BS_BoardTest:
+	g++ -std=c++11 BS_Board.cpp ConsoleDisplay.cpp BS_BoardTest.cpp Ship.cpp -o BS_BoardTest
+
 BS_Strategy:
 	g++ -std=c++11 -c BS_Strategy.cpp
 
+ConsoleDisplayTest:
+	g++ -std=c++11 ConsoleDisplay.cpp ConsoleDisplayTest.cpp -o ConsoleDisplayTest
+
 clean:
-	-rm *.o battleShipGame
+	-rm *.o 
+	-rm battleShipGame
+	-rm BS_BoardTest
+	-rm ConsoleDisplayTest

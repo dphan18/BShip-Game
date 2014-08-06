@@ -2,22 +2,18 @@
 #define BS_HUMANPLAYER
 
 #include <iostream>
-#include <vector>
-#include <memory>
+#include <string>
 #include "BS_Player.h"
-#include "BattleShip.h"
+#include "BS_Board.h"
 
 class BS_HumanPlayer : public BS_Player {
 
 public:
-	BS_HumanPlayer(const std::string& name, 
-			char number,
-			std::istream& i,
-			std::ostream& o
-			) : BS_Player(name, number, i, o, true), in(i), out(o) { }
+	BS_HumanPlayer(std::istream& i = std::cin, std::ostream& o = std::cout);
+
+	void move(char*, char*, BS_Board& board);
 private:
 	bool readUserShotInput(char*, char*);
-	void move(char*, char*);
 	std::istream& in;
 	std::ostream& out;
 };

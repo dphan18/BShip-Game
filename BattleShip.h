@@ -4,7 +4,10 @@
 #include <iostream>
 #include <memory>
 #include "Game.h"
-#include "BS_Player.h"
+#include "BS_HumanPlayer.h"
+#include "BS_ComputerPlayer.h"
+#include "BS_Board.h"
+#include "ConsoleDisplay.h"
 
 class BattleShip : public Game {
 	friend class BS_HumanPlayer;
@@ -17,7 +20,10 @@ public:
 private:
 	std::istream& in;
 	std::ostream& out;
-	std::unique_ptr<BS_Player> p1, p2;
+	ConsoleDisplay display;
+	BS_Board p1Board, p2Board;
+	BS_HumanPlayer p1;
+	BS_ComputerPlayer p2;
 };
 
 #endif // BATTLESHIP_H

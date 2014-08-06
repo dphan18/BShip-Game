@@ -7,10 +7,7 @@ using namespace std;
 
 #define GENIUS_COMPUTER 1
 
-BS_ComputerPlayer::BS_ComputerPlayer(std::string name, 
-					char number,
-					std::istream& i,
-					std::ostream& o) : BS_Player(name, number, i, o, false)
+BS_ComputerPlayer::BS_ComputerPlayer(std::string name) : BS_Player(name)
 {
 	// Initialize a list of the board coordinates
 	for (int r = 1; r < 1 + BS_Board::boardSize; ++r) {
@@ -23,7 +20,7 @@ BS_ComputerPlayer::BS_ComputerPlayer(std::string name,
 	srand(time(0));
 }
 
-void BS_ComputerPlayer::move(char *c, char *r)
+void BS_ComputerPlayer::move(char *c, char *r, BS_Board& board)
 {
 #if DUMB_COMPUTER
 	static int i = 1;

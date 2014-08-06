@@ -5,42 +5,56 @@
 
 using namespace std;
 
-BattleShip::BattleShip(istream& input, ostream& output) : in(input), out(output)
+BattleShip::BattleShip(istream& input, ostream& output) : 	
+				in(input), 
+				out(output), 
+				display(3, 25, 40),
+				p1Board(in, out),
+				p2Board(in, out),
+				p1(in, out),
+				p2()
 {
-	string user_input;
-
-	out << "Welcome to Battle Ship! Enter your name: ";
-	in >> user_input;
-	p1 = unique_ptr<BS_HumanPlayer>(new BS_HumanPlayer(user_input, 1, input, output));
-	p2 = unique_ptr<BS_ComputerPlayer>(new BS_ComputerPlayer("Computer", 2, input, output));
-
-	p1->placeShips(); // Human Player will be prompted
-	p2->placeShips(); // Computer will pick at random
+	p1Board.placeShips(display); // Human Player will be prompted
+	p2Board.placeShips(); // Computer will pick at random
+	display.clear();
 }
 
 void BattleShip::gameUpdate()
 {
 	char c, r;
-	out << "\n" << p1->name() << "'s turn" << endl;
-	p1->move(&c, &r);
-	if (p2->checkShot(c, r)) {
-		p1->markHit(c, r);
+	p1Board.writeShipGrid(display);
+	p1Board.writeAttackGrid(display);
+	display.write(2, p1.name() + "'s turn");
+	display.refresh();
+	p1.move(&c, &r, p1Board);
+
+	display.clear();
+	display.write(2, p1.name() + "'s turn");
+	if (p2Board.checkShot(c, r, display)) {
+		p1Board.markHit(c, r);
 	}
 
-	if (p2->fleetSunk()) {
-		out << p1->name() << " wins!!!" << endl;
+	if (p2Board.fleetSunk()) {
+		p1Board.writeShipGrid(display);
+		p1Board.writeAttackGrid(display);
+		display.write(2, p1.name() + " wins!!!");
+		display.refresh();
 		gameEnd();
 		return;
 	}
 
-	out << "\n" << p2->name() << "'s turn" << endl;
-	p2->move(&c, &r);
-	if (p1->checkShot(c, r)) {
-		p2->markHit(c, r);
+	display.write(2, p2.name() + "'s turn");
+	p2.move(&c, &r, p2Board);
+	if (p1Board.checkShot(c, r, display)) {
+		p2Board.markHit(c, r);
+		p2.update(c, r);
 	}
 	
-	if (p1->fleetSunk()) {
-		out << p2->name() << " wins!!!" << endl;
+	if (p1Board.fleetSunk()) {
+		p1Board.writeShipGrid(display);
+		p1Board.writeAttackGrid(display);
+		display.write(2, p2.name() + " wins!!!");
+		display.refresh();
 		gameEnd();
 		return;
 	}
