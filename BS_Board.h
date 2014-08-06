@@ -27,7 +27,7 @@ public:
 	void placeShips(ConsoleDisplay& display);
 	void placeShips();
 	bool makeAttempt(char c, char r);
-	bool checkShot(char c, char r, ConsoleDisplay& display);
+	bool checkShot(char c, char r, std::string& str);
 	void markHit(char c, char r);
 	bool fleetSunk();
 	void writeShipGrid(ConsoleDisplay& display);

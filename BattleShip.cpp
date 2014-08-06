@@ -22,6 +22,7 @@ BattleShip::BattleShip(istream& input, ostream& output) :
 void BattleShip::gameUpdate()
 {
 	char c, r;
+	string str;
 	p1Board.writeShipGrid(display);
 	p1Board.writeAttackGrid(display);
 	display.refresh();
@@ -30,8 +31,8 @@ void BattleShip::gameUpdate()
 
 	display.clear();
 
-	display.write(2, p1.name() + "'s turn");
-	if (p2Board.checkShot(c, r, display)) {
+	if (p2Board.checkShot(c, r, str)) {
+		display.write(2, p1.name() + " hit " + p2.name() + "'s" + " " + str);
 		p1Board.markHit(c, r);
 	}
 
@@ -44,9 +45,9 @@ void BattleShip::gameUpdate()
 		return;
 	}
 
-	display.write(2, p2.name() + "'s turn");
 	p2.move(&c, &r, p2Board);
-	if (p1Board.checkShot(c, r, display)) {
+	if (p1Board.checkShot(c, r, str)) {
+		display.write(2, p2.name() + " hit " + p1.name() + "'s" + " " + str);
 		p2Board.markHit(c, r);
 		p2.update(c, r);
 	}

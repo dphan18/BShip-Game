@@ -329,13 +329,15 @@ bool BS_Board::makeAttempt(char c, char r)
 	}
 }
 
-bool BS_Board::checkShot(char c, char r, ConsoleDisplay& display)
+bool BS_Board::checkShot(char c, char r, string& str)
 {
 	vector<Ship>::iterator s_it;
 
+	str.clear(); // clear return string
+
 	for (s_it = ships.begin(); s_it != ships.end(); ++s_it) {
 		if ((*s_it).checkHit(c, r)) {
-			display.write(2, "  " + (*s_it).type() + " was hit!"); // FIXME: remove magic numbers
+			str = (*s_it).type(); // Return ship type string
 			int i = ((r - 1) * boardSize) + c - 'A';
 			shipGrid[i].setHit();
 			return true;
