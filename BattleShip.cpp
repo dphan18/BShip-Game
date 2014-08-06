@@ -8,7 +8,7 @@ using namespace std;
 BattleShip::BattleShip(istream& input, ostream& output) : 	
 				in(input), 
 				out(output), 
-				display(3, 35, 40),
+				display(3, 40, 40),
 				p1Board(in, out),
 				p2Board(in, out),
 				p1(in, out),
@@ -24,11 +24,12 @@ void BattleShip::gameUpdate()
 	char c, r;
 	p1Board.writeShipGrid(display);
 	p1Board.writeAttackGrid(display);
-	display.write(2, p1.name() + "'s turn");
 	display.refresh();
+
 	p1.move(&c, &r, p1Board);
 
 	display.clear();
+
 	display.write(2, p1.name() + "'s turn");
 	if (p2Board.checkShot(c, r, display)) {
 		p1Board.markHit(c, r);

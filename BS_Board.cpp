@@ -86,8 +86,7 @@ void BS_Board::writeShipGrid(ConsoleDisplay& display)
 			display.write(0, row, displayTile(*b_it));
 		}		
 	}
-//	display.write(legend); // FIXME:
-//	display.write("---Legend---   \n");
+	display.write(legend);
 }
 
 void BS_Board::writeAttackGrid(ConsoleDisplay& display)

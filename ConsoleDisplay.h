@@ -21,7 +21,7 @@ private:
 	const char count, width, height;
 	char lastRow;
 	std::vector< std::vector<std::string> > screen;
-//	std::vector<std::string> stream;
+	std::vector<std::string> stream;
 };
 
 #endif // CONSOLEDISPLAY_H

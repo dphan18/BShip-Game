@@ -1,6 +1,7 @@
 #include "ConsoleDisplay.h"
 #include <cstdlib>
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ void ConsoleDisplay::clear()
 
 	lastRow = 0;
 
-//	stream.clear();
+	stream.clear();
 }
 
 void ConsoleDisplay::refresh()
@@ -35,8 +36,12 @@ void ConsoleDisplay::refresh()
 	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it) {
 		panelIt_t p_it = (*s_it).begin();
 		for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
-			// Append panel string plus padding
-			(*scrOut_it) += ((*p_it) + string(width - (*p_it).length(), ' ') + "  ");
+			try {
+				// Append panel string plus padding
+				(*scrOut_it) += ((*p_it) + string(width - (*p_it).length(), ' ') + "  ");
+			} catch (const length_error& le) {
+				(*scrOut_it) += ((*p_it) + "  ");
+			}
 			++p_it;
 		}
 	}
@@ -46,8 +51,8 @@ void ConsoleDisplay::refresh()
 		cout << *p_it << endl;
 
 	// Output stream after panels
-//	for (panelIt_t st_it = stream.begin(); st_it != stream.end(); ++st_it)
-//		cout << *st_it << endl;
+	for (panelIt_t st_it = stream.begin(); st_it != stream.end(); ++st_it)
+		cout << *st_it << endl;
 }
 
 void ConsoleDisplay::write(const unsigned char panel, 
@@ -71,6 +76,8 @@ void ConsoleDisplay::write(const unsigned char panel, const string& str)
 {
 	if (count <= panel)
 		return;
+	else if (str.length() > width)
+		return;
 
 	char row = 0;
 	panelIt_t p_it = screen[panel].begin();
@@ -87,5 +94,5 @@ void ConsoleDisplay::write(const unsigned char panel, const string& str)
 
 void ConsoleDisplay::write(const string& str)
 {
-	//stream.push_back(str);
+	stream.push_back(str);
 }
