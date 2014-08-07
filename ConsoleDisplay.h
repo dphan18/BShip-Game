@@ -10,7 +10,7 @@ public:
 	typedef std::vector<std::string>::iterator panelIt_t;
 
 	// Constructor
-	ConsoleDisplay(const char w[], const char wlen, const char height);
+	ConsoleDisplay(const char w[], const char panels, const char height);
 
 	void clear();
 	void refresh();
