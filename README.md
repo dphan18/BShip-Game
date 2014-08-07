@@ -1,6 +1,8 @@
 BShip-Game
 ==========
 
+Video: https://www.youtube.com/watch?v=OD-Dlny1uUY&feature=youtu.be
+
 Info:
 	In this version of the game you will play the computer which places its ships randomly.
 	When the computer takes a shot for the first time it will randomly choose a coordinate.
