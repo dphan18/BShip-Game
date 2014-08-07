@@ -5,9 +5,10 @@
 
 using namespace std;
 
-ConsoleDisplay::ConsoleDisplay(char c, char w, char h) : count(c), width(w), height(h), lastRow(0)
+ConsoleDisplay::ConsoleDisplay(const char widths[], const char panels, const char height) : 
+				w(widths, widths + panels), h(height), p(panels), lastRow(0)
 {
-	for (int i = 0; i < count; ++i)
+	for (int i = 0; i < p; ++i)
 		screen.push_back(vector<string>());
 
 	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it)
@@ -32,18 +33,20 @@ void ConsoleDisplay::refresh()
 	
 	vector<string> screenOut(lastRow + 1);
 
+	char panel = 0;
 	// Build up the output
 	for (screenIt_t s_it = screen.begin(); s_it != screen.end(); ++s_it) {
 		panelIt_t p_it = (*s_it).begin();
 		for (panelIt_t scrOut_it = screenOut.begin(); scrOut_it != screenOut.end(); ++scrOut_it) {
 			try {
 				// Append panel string plus padding
-				(*scrOut_it) += ((*p_it) + string(width - (*p_it).length(), ' ') + "  ");
+				(*scrOut_it) += ((*p_it) + string(w[panel] - (*p_it).length(), ' ') + "  ");
 			} catch (const length_error& le) {
 				(*scrOut_it) += ((*p_it) + "  ");
 			}
 			++p_it;
 		}
+		++panel;
 	}
 
 	// Output each row of the screen
@@ -59,11 +62,11 @@ void ConsoleDisplay::write(const unsigned char panel,
 				const unsigned char row, 
 				const string& str)
 {
-	if (panel >= count)
+	if (panel >= p)
 		return;
-	else if (row >= height)
+	else if (row >= h)
 		return;
-	else if (width < (screen[panel][row].length() + str.length()))
+	else if (w[panel] < (screen[panel][row].length() + str.length()))
 		return;
 	else
 		screen[panel][row] += str;
@@ -74,9 +77,9 @@ void ConsoleDisplay::write(const unsigned char panel,
 
 void ConsoleDisplay::write(const unsigned char panel, const string& str)
 {
-	if (count <= panel)
+	if (p <= panel)
 		return;
-	else if (str.length() > width)
+	else if (str.length() > w[panel])
 		return;
 
 	char row = 0;
@@ -85,6 +88,9 @@ void ConsoleDisplay::write(const unsigned char panel, const string& str)
 		++p_it;
 		++row;
 	}
+	
+	if (h <= row)
+		return;
 
 	(*p_it) += str;
 	

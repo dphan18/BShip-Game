@@ -7,9 +7,13 @@ using namespace std;
 
 BS_HumanPlayer::BS_HumanPlayer(istream& i, ostream& o) : in(i), out(o)
 {
-	out << "Welcome To Battle Ship!!! What is your name?: ";
+	string str;
+	do {
+		out << "Welcome To Battle Ship!!! What is your name (Max 20 chars)?: ";
+		in >> str;
+	} while (str.length() > 20);
 
-	in >> n;
+	n = str;
 }
 
 bool BS_HumanPlayer::readUserShotInput(char *col, char *row)

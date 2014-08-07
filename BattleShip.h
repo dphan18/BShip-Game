@@ -9,6 +9,9 @@
 #include "BS_Board.h"
 #include "ConsoleDisplay.h"
 
+static const char screenPanels[] = {30, 30, 60};
+static const char screenHeight = 40;
+
 class BattleShip : public Game {
 	friend class BS_HumanPlayer;
 	friend class BS_ComputerPlayer;

@@ -10,7 +10,7 @@ public:
 	typedef std::vector<std::string>::iterator panelIt_t;
 
 	// Constructor
-	ConsoleDisplay(char pCount, char pWidth, char pHeight);
+	ConsoleDisplay(const char w[], const char wlen, const char height);
 
 	void clear();
 	void refresh();
@@ -18,7 +18,8 @@ public:
 	void write(const unsigned char panel, const std::string& str);
 	void write(const unsigned char panel, const unsigned char row, const std::string& str);
 private:
-	const char count, width, height;
+	const std::vector<char> w;
+	const char h, p;
 	char lastRow;
 	std::vector< std::vector<std::string> > screen;
 	std::vector<std::string> stream;
